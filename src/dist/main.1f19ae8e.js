@@ -28525,7 +28525,7 @@ function (_Component) {
       return _react.default.createElement("div", {
         id: "teams-list"
       }, _react.default.createElement("h1", null, "Teams"), this.props.teams.map(function (team, index) {
-        _react.default.createElement("div", {
+        return _react.default.createElement("div", {
           key: index,
           className: "team"
         }, team.name);
@@ -28539,7 +28539,7 @@ function (_Component) {
 function mapStateToProps(state) {
   console.log('teams state:', state);
   return {
-    teams: state.teams.teams
+    teams: state.topLevelTeamsStoreSpace.teams
   };
 }
 
@@ -28598,11 +28598,11 @@ function (_Component) {
     value: function render() {
       return _react.default.createElement("div", {
         id: "games-list"
-      }, _react.default.createElement("h1", null, "Teams"), this.props.games.map(function (game, index) {
-        _react.default.createElement("div", {
+      }, _react.default.createElement("h1", null, "Games"), this.props.games.map(function (game, index) {
+        return _react.default.createElement("div", {
           key: index,
           className: "team"
-        }, game.team1.name, " ", 'vs.', " ", game.team2.name);
+        }, game.team1.name, " ", ' vs ', " ", game.team2.name);
       }));
     }
   }]);
@@ -28613,7 +28613,7 @@ function (_Component) {
 function mapStateToProps(state) {
   console.log('games state:', state);
   return {
-    games: state.games.games
+    games: state.topLevelGamesStoreSpace.games
   };
 }
 
@@ -28794,8 +28794,7 @@ var gamesReducer = function gamesReducer(state, action) {
       team1: {
         points: 4,
         name: 'Purple Parrots'
-      }
-    }, {
+      },
       team2: {
         points: 2,
         name: 'Blue Bears'
@@ -28828,8 +28827,8 @@ var _GamesReducer = _interopRequireDefault(require("./reducers/GamesReducer"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var reducer = (0, _redux.combineReducers)({
-  teams: _TeamsReducer.default,
-  games: _GamesReducer.default
+  topLevelTeamsStoreSpace: _TeamsReducer.default,
+  topLevelGamesStoreSpace: _GamesReducer.default
 });
 var store = (0, _redux.createStore)(reducer);
 
@@ -28863,7 +28862,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59302" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "63965" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

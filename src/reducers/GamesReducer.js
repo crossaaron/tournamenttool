@@ -7,9 +7,7 @@ const gamesReducer = (state, action) => {
                 team1: {
                     points: 4,
                     name: 'Purple Parrots'
-                }
-            },
-            {
+                },
                 team2: {
                     points: 2,
                     name: 'Blue Bears'

@@ -7,9 +7,11 @@ class TeamsList extends Component {
             <div id='teams-list'>
                 <h1>Teams</h1 >
                 {this.props.teams.map((team, index) => {
-                    <div key={index} className='team'>
-                        {team.name}
-                    </div>
+                    return (
+                        <div key={index} className='team'>
+                            {team.name}
+                        </div>
+                    )
                 })}
             </div>
         )
@@ -19,7 +21,7 @@ class TeamsList extends Component {
 function mapStateToProps(state) {
     console.log('teams state:', state);
     return {
-        teams: state.teams.teams
+        teams: state.topLevelTeamsStoreSpace.teams
     }
 
 }

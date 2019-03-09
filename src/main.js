@@ -11,8 +11,8 @@ import teamsReducer from './reducers/TeamsReducer'
 import gamesReducer from './reducers/GamesReducer'
 
 const reducer = combineReducers({
-    teams: teamsReducer,
-    games: gamesReducer,
+    topLevelTeamsStoreSpace: teamsReducer,
+    topLevelGamesStoreSpace: gamesReducer,
 });
 
 const store = createStore(reducer);
