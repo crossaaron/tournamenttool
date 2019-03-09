@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { Component, Fragment } from 'react'
 import ReactDOM from  'react-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
-import App from './Components/App'
+import Homepage from './Components/Homepage'
+import TeamDetailPage from './Components/TeamDetailPage'
 import './style.css'
 
 import teamsReducer from './reducers/TeamsReducer'
@@ -18,6 +20,11 @@ const reducer = combineReducers({
 const store = createStore(reducer);
 ReactDOM.render(
     <Provider store={store}>
-        <App />
+        <BrowserRouter>
+            <Fragment>
+                <Route exact path='/' component={Homepage} />
+                <Route exact path='/team/:id' component={TeamDetailPage} />
+            </Fragment>
+        </BrowserRouter>
     </Provider>
 , document.getElementById('root'));
