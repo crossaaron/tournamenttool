@@ -22,7 +22,7 @@ class TeamDetailPage extends Component {
         console.log('detail props:', this.props);
         let team = this.getTeam();
         return (
-            <div id='app-container'>
+            <div id='team-detail'>
                 <h1>{team.name}</h1>
                 <ul>
                     {team.members.map((member, index) => {

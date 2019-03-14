@@ -32613,7 +32613,7 @@ function (_Component) {
       console.log('detail props:', this.props);
       var team = this.getTeam();
       return _react.default.createElement("div", {
-        id: "app-container"
+        id: "team-detail"
       }, _react.default.createElement("h1", null, team.name), _react.default.createElement("ul", null, team.members.map(function (member, index) {
         return _react.default.createElement("li", {
           key: index
@@ -32709,7 +32709,7 @@ var reloadCSS = require('_css_loader');
 
 module.hot.dispose(reloadCSS);
 module.hot.accept(reloadCSS);
-},{"_css_loader":"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
+},{"./chess.jpg":[["chess.23c5db3b.jpg","chess.jpg"],"chess.jpg"],"_css_loader":"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32831,7 +32831,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49718" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56581" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
