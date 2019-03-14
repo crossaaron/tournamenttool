@@ -32591,12 +32591,30 @@ function (_Component) {
   }
 
   _createClass(TeamDetailPage, [{
+    key: "getTeam",
+    value: function getTeam() {
+      var id = this.props.match.params.id;
+      var team = this.props.teams.reduce(function (found, team) {
+        if (found) {
+          return found;
+        }
+
+        if (team.id == id) {
+          return team;
+        }
+
+        return false;
+      }, false);
+      return team;
+    }
+  }, {
     key: "render",
     value: function render() {
       console.log('detail props:', this.props);
+      var team = this.getTeam();
       return _react.default.createElement("div", {
         id: "app-container"
-      }, _react.default.createElement("h1", null, "this.props.team.name"), _react.default.createElement("ul", null, team.members.map(function (member, index) {
+      }, _react.default.createElement("h1", null, team.name), _react.default.createElement("ul", null, team.members.map(function (member, index) {
         return _react.default.createElement("li", {
           key: index
         }, member);
@@ -32607,24 +32625,10 @@ function (_Component) {
   return TeamDetailPage;
 }(_react.Component);
 
-TeamDetailPage = (0, _reactRouterDom.withRouter)(TeamDetailPage);
-
 function mapStateToProps(state) {
-  var id = 2345;
   var teams = state.topLevelTeamsStoreSpace.teams;
-  var team = teams.reduce(function (found, team) {
-    if (found) {
-      return found;
-    }
-
-    if (team.id === id) {
-      return team;
-    }
-
-    return false;
-  }, false);
   return {
-    team: team
+    teams: teams
   };
 }
 
@@ -32721,7 +32725,7 @@ var teamsReducer = function teamsReducer(state, action) {
       name: 'Purple Parrots',
       members: ['Beth', 'Roger', 'Alice']
     }, {
-      id: 2345,
+      id: 3456,
       name: 'Blue Bears',
       members: ['Kenny', 'Julie', 'Paul']
     }]
@@ -32797,7 +32801,7 @@ _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   component: _Homepage.default
 }), _react.default.createElement(_reactRouterDom.Route, {
   exact: true,
-  path: "/team/:id",
+  path: "/teams/:id",
   component: _TeamDetailPage.default
 })))), document.getElementById('root'));
 },{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./style.css":"style.css","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
@@ -32827,7 +32831,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53654" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49718" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

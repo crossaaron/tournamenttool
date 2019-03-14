@@ -4,11 +4,26 @@ import { connect } from 'react-redux'
 
 
 class TeamDetailPage extends Component {
+    getTeam() {
+    const id = this.props.match.params.id;
+    const team = this.props.teams.reduce((found, team) => {
+        if (found) {
+            return found
+        }
+        if (team.id == id) {
+            return team
+        }
+        return false
+    }, false);
+        return team
+    }
+
     render() {
         console.log('detail props:', this.props);
+        let team = this.getTeam();
         return (
             <div id='app-container'>
-                <h1>this.props.team.name</h1>
+                <h1>{team.name}</h1>
                 <ul>
                     {team.members.map((member, index) => {
                         return (
@@ -23,23 +38,12 @@ class TeamDetailPage extends Component {
     }
 }
 
-TeamDetailPage = withRouter(TeamDetailPage);
+
 
 function mapStateToProps(state) {
-    const id = 2345
     const teams = state.topLevelTeamsStoreSpace.teams;
-    const team = teams.reduce((found, team) => {
-        if (found) {
-            return found
-        }
-        if (team.id === id) {
-            return team
-        }
-        return false
-    }, false);
-
     return {
-        team
+        teams
     }
 }
 

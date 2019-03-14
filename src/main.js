@@ -23,7 +23,7 @@ ReactDOM.render(
         <BrowserRouter>
             <Fragment>
                 <Route exact path='/' component={Homepage} />
-                <Route exact path='/team/:id' component={TeamDetailPage} />
+                <Route exact path='/teams/:id' component={TeamDetailPage} />
             </Fragment>
         </BrowserRouter>
     </Provider>

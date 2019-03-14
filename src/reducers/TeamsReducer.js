@@ -11,7 +11,7 @@ const teamsReducer = (state, action) => {
                 ]
             },
             {
-                id: 2345,
+                id: 3456,
                 name: 'Blue Bears',
                 members: [
                     'Kenny', 'Julie', 'Paul'
