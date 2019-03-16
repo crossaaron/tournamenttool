@@ -10,7 +10,7 @@ class GamesList extends Component {
                 {this.props.games.map((game, index) => {
                     return (
                         <div key={index} className='team'>
-                            <Link to={'/games/' + game.id}>
+                            <Link to={'/games/id/' + game.id}>
                                 {game.team1.name} {' vs '} {game.team2.name}
                             </Link>
                         </div>
@@ -22,7 +22,6 @@ class GamesList extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('games state:', state);
     return {
         games: state.topLevelGamesStoreSpace.games
     }

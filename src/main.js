@@ -5,10 +5,12 @@ import { BrowserRouter, Route, Link } from 'react-router-dom'
 import { createStore, combineReducers } from 'redux'
 import { Provider } from 'react-redux'
 
+import './style.css'
+import Navbar from './Components/Navbar.js'
 import Homepage from './Components/Homepage'
 import TeamDetailPage from './Components/TeamDetailPage'
+import TeamCreatePage from './Components/TeamCreatePage'
 import GameDetailPage from "./Components/GameDetailPage";
-import './style.css'
 
 import teamsReducer from './reducers/TeamsReducer'
 import gamesReducer from './reducers/GamesReducer'
@@ -24,12 +26,12 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <div id='app-container'>
-                <p>
-                    <Link to='/'>Home</Link>
-                </p>
+                <Navbar />
                 <Route exact path='/' component={Homepage} />
-                <Route exact path='/teams/:id' component={TeamDetailPage} />
-                <Route exact path='/games/:id' component={GameDetailPage} />
+                <Route exact path='/teams/create' component={TeamCreatePage} />
+                <Route exact path='/teams/id/:id' component={TeamDetailPage} />
+                <Route exact path='/games/id/:id' component={GameDetailPage} />
+
             </div>
         </BrowserRouter>
     </Provider>

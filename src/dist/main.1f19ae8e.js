@@ -32333,7 +32333,137 @@ var _Context = require("./components/Context");
 var _connect = _interopRequireDefault(require("./connect/connect"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-},{"./components/Provider":"node_modules/react-redux/es/components/Provider.js","./components/connectAdvanced":"node_modules/react-redux/es/components/connectAdvanced.js","./components/Context":"node_modules/react-redux/es/components/Context.js","./connect/connect":"node_modules/react-redux/es/connect/connect.js"}],"Components/TeamsList.js":[function(require,module,exports) {
+},{"./components/Provider":"node_modules/react-redux/es/components/Provider.js","./components/connectAdvanced":"node_modules/react-redux/es/components/connectAdvanced.js","./components/Context":"node_modules/react-redux/es/components/Context.js","./connect/connect":"node_modules/react-redux/es/connect/connect.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
+var bundleURL = null;
+
+function getBundleURLCached() {
+  if (!bundleURL) {
+    bundleURL = getBundleURL();
+  }
+
+  return bundleURL;
+}
+
+function getBundleURL() {
+  // Attempt to find the URL of the current script and use that as the base URL
+  try {
+    throw new Error();
+  } catch (err) {
+    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
+
+    if (matches) {
+      return getBaseURL(matches[0]);
+    }
+  }
+
+  return '/';
+}
+
+function getBaseURL(url) {
+  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
+}
+
+exports.getBundleURL = getBundleURLCached;
+exports.getBaseURL = getBaseURL;
+},{}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
+var bundle = require('./bundle-url');
+
+function updateLink(link) {
+  var newLink = link.cloneNode();
+
+  newLink.onload = function () {
+    link.remove();
+  };
+
+  newLink.href = link.href.split('?')[0] + '?' + Date.now();
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+
+var cssTimeout = null;
+
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+
+    for (var i = 0; i < links.length; i++) {
+      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
+        updateLink(links[i]);
+      }
+    }
+
+    cssTimeout = null;
+  }, 50);
+}
+
+module.exports = reloadCSS;
+},{"./bundle-url":"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
+var reloadCSS = require('_css_loader');
+
+module.hot.dispose(reloadCSS);
+module.hot.accept(reloadCSS);
+},{"./chess.jpg":[["chess.23c5db3b.jpg","chess.jpg"],"chess.jpg"],"_css_loader":"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"Components/Navbar.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var Navbar =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Navbar, _Component);
+
+  function Navbar() {
+    _classCallCheck(this, Navbar);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(Navbar).apply(this, arguments));
+  }
+
+  _createClass(Navbar, [{
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: "/"
+      }, "Home"), " ", ' ', _react.default.createElement(_reactRouterDom.Link, {
+        to: "/teams/create"
+      }, "Create Team"));
+    }
+  }]);
+
+  return Navbar;
+}(_react.Component);
+
+exports.default = Navbar;
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js"}],"Components/TeamsList.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32388,7 +32518,7 @@ function (_Component) {
           key: index,
           className: "team"
         }, _react.default.createElement(_reactRouterDom.Link, {
-          to: '/teams/' + team.id
+          to: '/teams/id/' + team.id
         }, team.name));
       }));
     }
@@ -32398,7 +32528,6 @@ function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-  console.log('teams state:', state);
   return {
     teams: state.topLevelTeamsStoreSpace.teams
   };
@@ -32466,7 +32595,7 @@ function (_Component) {
           key: index,
           className: "team"
         }, _react.default.createElement(_reactRouterDom.Link, {
-          to: '/games/' + game.id
+          to: '/games/id/' + game.id
         }, game.team1.name, " ", ' vs ', " ", game.team2.name));
       }));
     }
@@ -32476,7 +32605,6 @@ function (_Component) {
 }(_react.Component);
 
 function mapStateToProps(state) {
-  console.log('games state:', state);
   return {
     games: state.topLevelGamesStoreSpace.games
   };
@@ -32639,7 +32767,135 @@ function mapDispatchToProps(dispatch) {}
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamDetailPage);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"Components/GameDetailPage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"reducers/TeamsActions.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createTeam = createTeam;
+exports.CREATE_TEAM = void 0;
+var CREATE_TEAM = 'CREATE TEAM';
+exports.CREATE_TEAM = CREATE_TEAM;
+
+function createTeam(team) {
+  team.id = Math.random();
+  return {
+    type: CREATE_TEAM,
+    team: team
+  };
+}
+},{}],"Components/TeamCreatePage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _TeamsActions = require("../reducers/TeamsActions");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var TeamCreatePage =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(TeamCreatePage, _Component);
+
+  function TeamCreatePage(props) {
+    var _this;
+
+    _classCallCheck(this, TeamCreatePage);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TeamCreatePage).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(TeamCreatePage, [{
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      console.log('create');
+      var inputs = event.target.getElementsByTagName('input');
+      var teamName = inputs[0].value;
+      var member1 = inputs[1].value;
+      var member2 = inputs[2].value;
+      var member3 = inputs[3].value;
+      this.props.createTeam({
+        name: teamName,
+        members: [member1, member2, member3]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Create Team"), _react.default.createElement("form", {
+        onSubmit: this.handleSubmit
+      }, _react.default.createElement("p", null, "Team Name: ", _react.default.createElement("input", {
+        type: "text",
+        name: "team-name"
+      })), _react.default.createElement("p", null, "Team Member: ", _react.default.createElement("input", {
+        type: "text",
+        name: "member1"
+      })), _react.default.createElement("p", null, "Team Member: ", _react.default.createElement("input", {
+        type: "text",
+        name: "member2"
+      })), _react.default.createElement("p", null, "Team Member: ", _react.default.createElement("input", {
+        type: "text",
+        name: "member3"
+      })), _react.default.createElement("p", null, _react.default.createElement("input", {
+        type: "submit",
+        value: "create"
+      }))));
+    }
+  }]);
+
+  return TeamCreatePage;
+}(_react.Component);
+
+function mapStateToProps(state) {
+  var teams = state.topLevelTeamsStoreSpace.teams;
+  return {
+    teams: teams
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createTeam: function createTeam(team) {
+      console.log('dispatch create:', team);
+      dispatch((0, _TeamsActions.createTeam)(team));
+    }
+  };
+}
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamCreatePage);
+
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/TeamsActions":"reducers/TeamsActions.js"}],"Components/GameDetailPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32726,79 +32982,7 @@ function mapDispatchToProps(dispatch) {}
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GameDetailPage);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
-var bundleURL = null;
-
-function getBundleURLCached() {
-  if (!bundleURL) {
-    bundleURL = getBundleURL();
-  }
-
-  return bundleURL;
-}
-
-function getBundleURL() {
-  // Attempt to find the URL of the current script and use that as the base URL
-  try {
-    throw new Error();
-  } catch (err) {
-    var matches = ('' + err.stack).match(/(https?|file|ftp):\/\/[^)\n]+/g);
-
-    if (matches) {
-      return getBaseURL(matches[0]);
-    }
-  }
-
-  return '/';
-}
-
-function getBaseURL(url) {
-  return ('' + url).replace(/^((?:https?|file|ftp):\/\/.+)\/[^/]+$/, '$1') + '/';
-}
-
-exports.getBundleURL = getBundleURLCached;
-exports.getBaseURL = getBaseURL;
-},{}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js":[function(require,module,exports) {
-var bundle = require('./bundle-url');
-
-function updateLink(link) {
-  var newLink = link.cloneNode();
-
-  newLink.onload = function () {
-    link.remove();
-  };
-
-  newLink.href = link.href.split('?')[0] + '?' + Date.now();
-  link.parentNode.insertBefore(newLink, link.nextSibling);
-}
-
-var cssTimeout = null;
-
-function reloadCSS() {
-  if (cssTimeout) {
-    return;
-  }
-
-  cssTimeout = setTimeout(function () {
-    var links = document.querySelectorAll('link[rel="stylesheet"]');
-
-    for (var i = 0; i < links.length; i++) {
-      if (bundle.getBaseURL(links[i].href) === bundle.getBundleURL()) {
-        updateLink(links[i]);
-      }
-    }
-
-    cssTimeout = null;
-  }, 50);
-}
-
-module.exports = reloadCSS;
-},{"./bundle-url":"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js"}],"style.css":[function(require,module,exports) {
-var reloadCSS = require('_css_loader');
-
-module.hot.dispose(reloadCSS);
-module.hot.accept(reloadCSS);
-},{"./chess.jpg":[["chess.23c5db3b.jpg","chess.jpg"],"chess.jpg"],"_css_loader":"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/css-loader.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32806,8 +32990,17 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = void 0;
 
-// keeping track of teams, team names, and team members
-var teamsReducer = function teamsReducer(state, action) {
+var _TeamsActions = require("./TeamsActions");
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function initialState() {
   return {
     teams: [{
       id: 2345,
@@ -32819,11 +33012,34 @@ var teamsReducer = function teamsReducer(state, action) {
       members: ['Kenny', 'Julie', 'Paul']
     }]
   };
+}
+
+var teamsReducer = function teamsReducer(state, action) {
+  console.log('action', action);
+
+  if (state === undefined) {
+    return initialState();
+  }
+
+  switch (action.type) {
+    case _TeamsActions.CREATE_TEAM:
+      {
+        var teams = [].concat(_toConsumableArray(state.teams), [action.team]);
+        return {
+          teams: teams
+        };
+      }
+
+    default:
+      {
+        return state;
+      }
+  }
 };
 
 var _default = teamsReducer;
 exports.default = _default;
-},{}],"reducers/GamesReducer.js":[function(require,module,exports) {
+},{"./TeamsActions":"reducers/TeamsActions.js"}],"reducers/GamesReducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32863,13 +33079,17 @@ var _redux = require("redux");
 
 var _reactRedux = require("react-redux");
 
+require("./style.css");
+
+var _Navbar = _interopRequireDefault(require("./Components/Navbar.js"));
+
 var _Homepage = _interopRequireDefault(require("./Components/Homepage"));
 
 var _TeamDetailPage = _interopRequireDefault(require("./Components/TeamDetailPage"));
 
-var _GameDetailPage = _interopRequireDefault(require("./Components/GameDetailPage"));
+var _TeamCreatePage = _interopRequireDefault(require("./Components/TeamCreatePage"));
 
-require("./style.css");
+var _GameDetailPage = _interopRequireDefault(require("./Components/GameDetailPage"));
 
 var _TeamsReducer = _interopRequireDefault(require("./reducers/TeamsReducer"));
 
@@ -32887,22 +33107,24 @@ _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   store: store
 }, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
   id: "app-container"
-}, _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
-  to: "/"
-}, "Home")), _react.default.createElement(_reactRouterDom.Route, {
+}, _react.default.createElement(_Navbar.default, null), _react.default.createElement(_reactRouterDom.Route, {
   exact: true,
   path: "/",
   component: _Homepage.default
 }), _react.default.createElement(_reactRouterDom.Route, {
   exact: true,
-  path: "/teams/:id",
+  path: "/teams/create",
+  component: _TeamCreatePage.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  exact: true,
+  path: "/teams/id/:id",
   component: _TeamDetailPage.default
 }), _react.default.createElement(_reactRouterDom.Route, {
   exact: true,
-  path: "/games/:id",
+  path: "/games/id/:id",
   component: _GameDetailPage.default
 })))), document.getElementById('root'));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./style.css":"style.css","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./style.css":"style.css","./Components/Navbar.js":"Components/Navbar.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/TeamCreatePage":"Components/TeamCreatePage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -32929,7 +33151,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52446" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62039" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

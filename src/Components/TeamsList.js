@@ -10,7 +10,7 @@ class TeamsList extends Component {
                 {this.props.teams.map((team, index) => {
                     return (
                         <div key={index} className='team'>
-                            <Link to={'/teams/' + team.id}>
+                            <Link to={'/teams/id/' + team.id}>
                                 {team.name}
                             </Link>
                         </div>
@@ -22,7 +22,6 @@ class TeamsList extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log('teams state:', state);
     return {
         teams: state.topLevelTeamsStoreSpace.teams
     }
