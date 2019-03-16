@@ -19,13 +19,12 @@ class GameDetailPage extends Component {
     }
 
     render() {
-        console.log('detail props:', this.props);
         const game = this.getGame();
         return (
             <div id='game-detail'>
                 <h1>{game.team1.name} {' vs '} {game.team2.name}</h1>
-                <h3>{game.team1.name} {': '} {game.team1.score}</h3>
-                <h3>{game.team2.name} {': '} {game.team2.score}</h3>
+                <h3>{game.team1.name} {': '} {game.team1.points}</h3>
+                <h3>{game.team2.name} {': '} {game.team2.points}</h3>
             </div>
         )
     }

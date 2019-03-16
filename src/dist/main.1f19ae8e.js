@@ -32423,6 +32423,8 @@ var _react = _interopRequireWildcard(require("react"));
 
 var _reactRedux = require("react-redux");
 
+var _reactRouterDom = require("react-router-dom");
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -32463,7 +32465,9 @@ function (_Component) {
         return _react.default.createElement("div", {
           key: index,
           className: "team"
-        }, game.team1.name, " ", ' vs ', " ", game.team2.name);
+        }, _react.default.createElement(_reactRouterDom.Link, {
+          to: '/games/' + game.id
+        }, game.team1.name, " ", ' vs ', " ", game.team2.name));
       }));
     }
   }]);
@@ -32485,7 +32489,7 @@ function mapDispatchToProps() {
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GamesList);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"Components/Homepage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js"}],"Components/Homepage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32535,9 +32539,7 @@ function (_Component) {
   _createClass(Homepage, [{
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", {
-        id: "app-container"
-      }, _react.default.createElement(_TeamsList.default, null), _react.default.createElement(_GamesList.default, null));
+      return _react.default.createElement(_react.Fragment, null, _react.default.createElement(_TeamsList.default, null), _react.default.createElement(_GamesList.default, null));
     }
   }]);
 
@@ -32635,6 +32637,93 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {}
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamDetailPage);
+
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"Components/GameDetailPage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRouterDom = require("react-router-dom");
+
+var _reactRedux = require("react-redux");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var GameDetailPage =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GameDetailPage, _Component);
+
+  function GameDetailPage() {
+    _classCallCheck(this, GameDetailPage);
+
+    return _possibleConstructorReturn(this, _getPrototypeOf(GameDetailPage).apply(this, arguments));
+  }
+
+  _createClass(GameDetailPage, [{
+    key: "getGame",
+    value: function getGame() {
+      var id = this.props.match.params.id;
+      var game = this.props.games.reduce(function (found, game) {
+        if (found) {
+          return found;
+        }
+
+        if (game.id == id) {
+          return game;
+        }
+
+        return false;
+      }, false);
+      return game;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var game = this.getGame();
+      return _react.default.createElement("div", {
+        id: "game-detail"
+      }, _react.default.createElement("h1", null, game.team1.name, " ", ' vs ', " ", game.team2.name), _react.default.createElement("h3", null, game.team1.name, " ", ': ', " ", game.team1.points), _react.default.createElement("h3", null, game.team2.name, " ", ': ', " ", game.team2.points));
+    }
+  }]);
+
+  return GameDetailPage;
+}(_react.Component);
+
+function mapStateToProps(state) {
+  var games = state.topLevelGamesStoreSpace.games;
+  return {
+    games: games
+  };
+}
+
+function mapDispatchToProps(dispatch) {}
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GameDetailPage);
 
 exports.default = _default;
 },{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/bundle-url.js":[function(require,module,exports) {
@@ -32746,6 +32835,7 @@ exports.default = void 0;
 var gamesReducer = function gamesReducer(state, action) {
   return {
     games: [{
+      id: 2222,
       team1: {
         points: 4,
         name: 'Purple Parrots'
@@ -32763,7 +32853,7 @@ exports.default = _default;
 },{}],"main.js":[function(require,module,exports) {
 "use strict";
 
-var _react = _interopRequireWildcard(require("react"));
+var _react = _interopRequireDefault(require("react"));
 
 var _reactDom = _interopRequireDefault(require("react-dom"));
 
@@ -32777,6 +32867,8 @@ var _Homepage = _interopRequireDefault(require("./Components/Homepage"));
 
 var _TeamDetailPage = _interopRequireDefault(require("./Components/TeamDetailPage"));
 
+var _GameDetailPage = _interopRequireDefault(require("./Components/GameDetailPage"));
+
 require("./style.css");
 
 var _TeamsReducer = _interopRequireDefault(require("./reducers/TeamsReducer"));
@@ -32784,8 +32876,6 @@ var _TeamsReducer = _interopRequireDefault(require("./reducers/TeamsReducer"));
 var _GamesReducer = _interopRequireDefault(require("./reducers/GamesReducer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 var reducer = (0, _redux.combineReducers)({
   topLevelTeamsStoreSpace: _TeamsReducer.default,
@@ -32795,7 +32885,11 @@ var store = (0, _redux.createStore)(reducer);
 
 _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   store: store
-}, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement(_react.Fragment, null, _react.default.createElement(_reactRouterDom.Route, {
+}, _react.default.createElement(_reactRouterDom.BrowserRouter, null, _react.default.createElement("div", {
+  id: "app-container"
+}, _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
+  to: "/"
+}, "Home")), _react.default.createElement(_reactRouterDom.Route, {
   exact: true,
   path: "/",
   component: _Homepage.default
@@ -32803,8 +32897,12 @@ _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   exact: true,
   path: "/teams/:id",
   component: _TeamDetailPage.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  exact: true,
+  path: "/games/:id",
+  component: _GameDetailPage.default
 })))), document.getElementById('root'));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./style.css":"style.css","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./style.css":"style.css","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -32831,7 +32929,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "56581" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52446" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

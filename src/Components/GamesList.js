@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 class GamesList extends Component {
     render() {
@@ -9,7 +10,9 @@ class GamesList extends Component {
                 {this.props.games.map((game, index) => {
                     return (
                         <div key={index} className='team'>
-                            {game.team1.name} {' vs '} {game.team2.name}
+                            <Link to={'/games/' + game.id}>
+                                {game.team1.name} {' vs '} {game.team2.name}
+                            </Link>
                         </div>
                     )
                 })}
