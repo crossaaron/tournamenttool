@@ -6,7 +6,8 @@ export default class Navbar extends Component {
         return (
             <p>
                 <Link to='/'>Home</Link> {' '}
-                <Link to='/teams/create'>Create Team</Link>
+                <Link to='/teams/create'>Create Team</Link> {' '}
+                <Link to='/games/create'>Create Game</Link>
             </p>
         )
     }

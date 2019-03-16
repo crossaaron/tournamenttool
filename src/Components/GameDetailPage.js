@@ -40,6 +40,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+    return {
 
+    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetailPage)

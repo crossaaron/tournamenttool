@@ -12,6 +12,8 @@ import TeamDetailPage from './Components/TeamDetailPage'
 import TeamCreatePage from './Components/TeamCreatePage'
 import TeamEditPage from './Components/TeamEditPage'
 import GameDetailPage from './Components/GameDetailPage';
+import GameCreatePage from './Components/GameCreatePage';
+
 
 import teamsReducer from './reducers/TeamsReducer'
 import gamesReducer from './reducers/GamesReducer'
@@ -34,7 +36,7 @@ ReactDOM.render(
                 <Route exact path='/teams/id/:id' component={TeamDetailPage} />
                 <Route exact path='/teams/edit/:id' component={TeamEditPage} />
                 <Route exact path='/games/id/:id' component={GameDetailPage} />
-
+                <Route exact path='/games/create' component={GameCreatePage} />
             </div>
         </BrowserRouter>
     </Provider>

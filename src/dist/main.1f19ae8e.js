@@ -32455,7 +32455,9 @@ function (_Component) {
         to: "/"
       }, "Home"), " ", ' ', _react.default.createElement(_reactRouterDom.Link, {
         to: "/teams/create"
-      }, "Create Team"));
+      }, "Create Team"), " ", ' ', _react.default.createElement(_reactRouterDom.Link, {
+        to: "/games/create"
+      }, "Create Game"));
     }
   }]);
 
@@ -33149,12 +33151,216 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {}
+function mapDispatchToProps(dispatch) {
+  return {};
+}
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GameDetailPage);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"reducers/GamesReducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createGame = createGame;
+exports.default = exports.CREATE_GAME = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+// keep track of games teams are playing against each other
+var CREATE_GAME = 'CREATE_GAME';
+exports.CREATE_GAME = CREATE_GAME;
+
+function createGame(team1, team2) {
+  var id = Math.random();
+  team1.points = 0;
+  team2.points = 0;
+  var game = {
+    id: id,
+    team1: team1,
+    team2: team2
+  };
+  return {
+    type: CREATE_GAME,
+    game: game
+  };
+}
+
+function initialState() {
+  return {
+    games: [{
+      id: 2222,
+      team1: {
+        points: 4,
+        name: 'Purple Parrots'
+      },
+      team2: {
+        points: 2,
+        name: 'Blue Bears'
+      }
+    }]
+  };
+}
+
+var gamesReducer = function gamesReducer(state, action) {
+  console.log('games reducer:', action);
+
+  if (state === undefined) {
+    return initialState();
+  }
+
+  switch (action.type) {
+    case CREATE_GAME:
+      {
+        var games = [].concat(_toConsumableArray(state.games), [action.game]);
+        return {
+          games: games
+        };
+      }
+
+    default:
+      {
+        return state;
+      }
+  }
+};
+
+var _default = gamesReducer;
+exports.default = _default;
+},{}],"Components/GameCreatePage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _GamesReducer = require("../reducers/GamesReducer");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var GameCreatePage =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(GameCreatePage, _Component);
+
+  function GameCreatePage(props) {
+    var _this;
+
+    _classCallCheck(this, GameCreatePage);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(GameCreatePage).call(this, props));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(GameCreatePage, [{
+    key: "getTeambyId",
+    value: function getTeambyId(id) {
+      return this.props.teams.reduce(function (found, team) {
+        if (found) {
+          return found;
+        }
+
+        if (team.id == id) {
+          return team;
+        }
+
+        return false;
+      }, false);
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var form = document.getElementById('create-game-form');
+      var selects = form.getElementsByTagName('select');
+      var teamId1 = selects[0].value;
+      var teamId2 = selects[1].value;
+      var team1 = this.getTeambyId(teamId1);
+      var team2 = this.getTeambyId(teamId2);
+      console.log('create game', team1, team2);
+      this.props.createGame(team1, team2);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Create Game"), _react.default.createElement("form", {
+        id: "create-game-form",
+        onSubmit: this.handleSubmit
+      }, _react.default.createElement("p", null, "Team 1:", _react.default.createElement("select", {
+        name: "team1"
+      }, this.props.teams.map(function (team, index) {
+        return _react.default.createElement("option", {
+          key: index,
+          value: team.id
+        }, team.name);
+      }))), _react.default.createElement("p", null, "Team 2:", _react.default.createElement("select", {
+        name: "team2"
+      }, this.props.teams.map(function (team, index) {
+        return _react.default.createElement("option", {
+          key: index,
+          value: team.id
+        }, team.name);
+      }))), _react.default.createElement("p", null, _react.default.createElement("input", {
+        type: "submit",
+        value: "Create Game"
+      }))));
+    }
+  }]);
+
+  return GameCreatePage;
+}(_react.Component);
+
+function mapStateToProps(state) {
+  var teams = state.topLevelTeamsStoreSpace.teams;
+  return {
+    teams: teams
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createGame: function createGame(team1, team2) {
+      dispatch((0, _GamesReducer.createGame)(team1, team2));
+    }
+  };
+}
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GameCreatePage);
+
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/GamesReducer":"reducers/GamesReducer.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33225,34 +33431,7 @@ var teamsReducer = function teamsReducer(state, action) {
 
 var _default = teamsReducer;
 exports.default = _default;
-},{"./TeamsActions":"reducers/TeamsActions.js"}],"reducers/GamesReducer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-// keep track of games teams are playing against each other
-var gamesReducer = function gamesReducer(state, action) {
-  return {
-    games: [{
-      id: 2222,
-      team1: {
-        points: 4,
-        name: 'Purple Parrots'
-      },
-      team2: {
-        points: 2,
-        name: 'Blue Bears'
-      }
-    }]
-  };
-};
-
-var _default = gamesReducer;
-exports.default = _default;
-},{}],"main.js":[function(require,module,exports) {
+},{"./TeamsActions":"reducers/TeamsActions.js"}],"main.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -33278,6 +33457,8 @@ var _TeamCreatePage = _interopRequireDefault(require("./Components/TeamCreatePag
 var _TeamEditPage = _interopRequireDefault(require("./Components/TeamEditPage"));
 
 var _GameDetailPage = _interopRequireDefault(require("./Components/GameDetailPage"));
+
+var _GameCreatePage = _interopRequireDefault(require("./Components/GameCreatePage"));
 
 var _TeamsReducer = _interopRequireDefault(require("./reducers/TeamsReducer"));
 
@@ -33315,8 +33496,12 @@ _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   exact: true,
   path: "/games/id/:id",
   component: _GameDetailPage.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  exact: true,
+  path: "/games/create",
+  component: _GameCreatePage.default
 })))), document.getElementById('root'));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./style.css":"style.css","./Components/Navbar.js":"Components/Navbar.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/TeamCreatePage":"Components/TeamCreatePage.js","./Components/TeamEditPage":"Components/TeamEditPage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./style.css":"style.css","./Components/Navbar.js":"Components/Navbar.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/TeamCreatePage":"Components/TeamCreatePage.js","./Components/TeamEditPage":"Components/TeamEditPage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./Components/GameCreatePage":"Components/GameCreatePage.js","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33343,7 +33528,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49366" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54518" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
