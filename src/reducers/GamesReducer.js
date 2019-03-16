@@ -1,5 +1,7 @@
 // keep track of games teams are playing against each other
 export const CREATE_GAME = 'CREATE_GAME';
+export const ADD_POINT = 'ADD_POINT';
+export const SUBTRACT_POINT = 'SUBTRACT_POINT';
 
 export function createGame(team1, team2) {
     let id = Math.random();
@@ -14,16 +16,58 @@ export function createGame(team1, team2) {
     }
 }
 
+export function addPoint(game, team) {
+    game = {
+        id: game.id,
+        team1: {...game.team1},
+        team2: {...game.team2},
+    };
+
+    team = game.team1.id == team.id
+        ? game.team1
+        : game.team2;
+    team.points++;
+
+    return {
+        type: ADD_POINT,
+        game
+    }
+}
+
+export function subtractPoint(game, team) {
+    game = {
+        id: game.id,
+        team1: {...game.team1},
+        team2: {...game.team2},
+    };
+
+    team = game.team1.id == team.id
+        ? game.team1
+        : game.team2;
+    team.points--;
+
+    if (team.points < 0 ) {
+        team.points = 0
+    }
+
+    return {
+        type: SUBTRACT_POINT,
+        game
+    }
+}
+
 function initialState() {
     return {
         games: [
             {
                 id: 2222,
                 team1: {
+                    id: 2345,
                     points: 4,
                     name: 'Purple Parrots'
                 },
                 team2: {
+                    id: 3456,
                     points: 2,
                     name: 'Blue Bears'
                 }
@@ -33,16 +77,28 @@ function initialState() {
 }
 
 const gamesReducer = (state, action) => {
-    console.log('games reducer:', action);
     if (state === undefined) {
         return initialState()
     }
 
     switch(action.type) {
-        case CREATE_GAME: {
-            const games = [...state.games, action.game]
-            return {games}
+        case ADD_POINT:
+        case SUBTRACT_POINT: {
+            let games = [...state.games]
+            games = games.map(game => {
+                if (game.id == action.game.id) {
+                    return action.game
+                } else {
+                    return game
+                }
+            })
+            return { games }
         }
+        case CREATE_GAME: {
+            const games = [...state.games, action.game];
+            return { games }
+        }
+
         default: {
             return state
         }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux'
+import { addPoint, subtractPoint } from "../reducers/GamesReducer";
 
 
 class GameDetailPage extends Component {
@@ -24,7 +24,23 @@ class GameDetailPage extends Component {
             <div id='game-detail'>
                 <h1>{game.team1.name} {' vs '} {game.team2.name}</h1>
                 <h3>{game.team1.name} {': '} {game.team1.points}</h3>
+                <p>
+                    <button onClick={() => this.props.subtractPoint(game, game.team1) }>
+                        Subtract Point
+                    </button>
+                    <button onClick={() => this.props.addPoint(game, game.team1) }>
+                        Add Point
+                    </button>
+                </p>
                 <h3>{game.team2.name} {': '} {game.team2.points}</h3>
+                <p>
+                    <button onClick={() =>this.props.subtractPoint(game, game.team2) }>
+                        Subtract Point
+                    </button>
+                    <button onClick={() =>this.props.addPoint(game, game.team2) }>
+                        Add Point
+                    </button>
+                </p>
             </div>
         )
     }
@@ -41,7 +57,12 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-
+        addPoint: (game, team) => {
+            dispatch(addPoint(game, team))
+        },
+        subtractPoint: (game, team) => {
+            dispatch(subtractPoint(game, team))
+        }
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(GameDetailPage)

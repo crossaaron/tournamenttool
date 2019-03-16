@@ -33069,7 +33069,145 @@ function mapDispatchToProps(dispatch) {
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamEditPage);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/TeamsActions":"reducers/TeamsActions.js"}],"Components/GameDetailPage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/TeamsActions":"reducers/TeamsActions.js"}],"reducers/GamesReducer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createGame = createGame;
+exports.addPoint = addPoint;
+exports.subtractPoint = subtractPoint;
+exports.default = exports.SUBTRACT_POINT = exports.ADD_POINT = exports.CREATE_GAME = void 0;
+
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// keep track of games teams are playing against each other
+var CREATE_GAME = 'CREATE_GAME';
+exports.CREATE_GAME = CREATE_GAME;
+var ADD_POINT = 'ADD_POINT';
+exports.ADD_POINT = ADD_POINT;
+var SUBTRACT_POINT = 'SUBTRACT_POINT';
+exports.SUBTRACT_POINT = SUBTRACT_POINT;
+
+function createGame(team1, team2) {
+  var id = Math.random();
+  team1.points = 0;
+  team2.points = 0;
+  var game = {
+    id: id,
+    team1: team1,
+    team2: team2
+  };
+  return {
+    type: CREATE_GAME,
+    game: game
+  };
+}
+
+function addPoint(game, team) {
+  game = {
+    id: game.id,
+    team1: _objectSpread({}, game.team1),
+    team2: _objectSpread({}, game.team2)
+  };
+  team = game.team1.id == team.id ? game.team1 : game.team2;
+  team.points++;
+  return {
+    type: ADD_POINT,
+    game: game
+  };
+}
+
+function subtractPoint(game, team) {
+  game = {
+    id: game.id,
+    team1: _objectSpread({}, game.team1),
+    team2: _objectSpread({}, game.team2)
+  };
+  team = game.team1.id == team.id ? game.team1 : game.team2;
+  team.points--;
+
+  if (team.points < 0) {
+    team.points = 0;
+  }
+
+  return {
+    type: SUBTRACT_POINT,
+    game: game
+  };
+}
+
+function initialState() {
+  return {
+    games: [{
+      id: 2222,
+      team1: {
+        id: 2345,
+        points: 4,
+        name: 'Purple Parrots'
+      },
+      team2: {
+        id: 3456,
+        points: 2,
+        name: 'Blue Bears'
+      }
+    }]
+  };
+}
+
+var gamesReducer = function gamesReducer(state, action) {
+  if (state === undefined) {
+    return initialState();
+  }
+
+  switch (action.type) {
+    case ADD_POINT:
+    case SUBTRACT_POINT:
+      {
+        var games = _toConsumableArray(state.games);
+
+        games = games.map(function (game) {
+          if (game.id == action.game.id) {
+            return action.game;
+          } else {
+            return game;
+          }
+        });
+        return {
+          games: games
+        };
+      }
+
+    case CREATE_GAME:
+      {
+        var _games = [].concat(_toConsumableArray(state.games), [action.game]);
+
+        return {
+          games: _games
+        };
+      }
+
+    default:
+      {
+        return state;
+      }
+  }
+};
+
+var _default = gamesReducer;
+exports.default = _default;
+},{}],"Components/GameDetailPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33079,9 +33217,9 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _reactRouterDom = require("react-router-dom");
-
 var _reactRedux = require("react-redux");
+
+var _GamesReducer = require("../reducers/GamesReducer");
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
@@ -33134,10 +33272,28 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
+      var _this = this;
+
       var game = this.getGame();
       return _react.default.createElement("div", {
         id: "game-detail"
-      }, _react.default.createElement("h1", null, game.team1.name, " ", ' vs ', " ", game.team2.name), _react.default.createElement("h3", null, game.team1.name, " ", ': ', " ", game.team1.points), _react.default.createElement("h3", null, game.team2.name, " ", ': ', " ", game.team2.points));
+      }, _react.default.createElement("h1", null, game.team1.name, " ", ' vs ', " ", game.team2.name), _react.default.createElement("h3", null, game.team1.name, " ", ': ', " ", game.team1.points), _react.default.createElement("p", null, _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.subtractPoint(game, game.team1);
+        }
+      }, "Subtract Point"), _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.addPoint(game, game.team1);
+        }
+      }, "Add Point")), _react.default.createElement("h3", null, game.team2.name, " ", ': ', " ", game.team2.points), _react.default.createElement("p", null, _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.subtractPoint(game, game.team2);
+        }
+      }, "Subtract Point"), _react.default.createElement("button", {
+        onClick: function onClick() {
+          return _this.props.addPoint(game, game.team2);
+        }
+      }, "Add Point")));
     }
   }]);
 
@@ -33152,90 +33308,20 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    addPoint: function addPoint(game, team) {
+      dispatch((0, _GamesReducer.addPoint)(game, team));
+    },
+    subtractPoint: function subtractPoint(game, team) {
+      dispatch((0, _GamesReducer.subtractPoint)(game, team));
+    }
+  };
 }
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GameDetailPage);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","react-redux":"node_modules/react-redux/es/index.js"}],"reducers/GamesReducer.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.createGame = createGame;
-exports.default = exports.CREATE_GAME = void 0;
-
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
-
-function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
-
-// keep track of games teams are playing against each other
-var CREATE_GAME = 'CREATE_GAME';
-exports.CREATE_GAME = CREATE_GAME;
-
-function createGame(team1, team2) {
-  var id = Math.random();
-  team1.points = 0;
-  team2.points = 0;
-  var game = {
-    id: id,
-    team1: team1,
-    team2: team2
-  };
-  return {
-    type: CREATE_GAME,
-    game: game
-  };
-}
-
-function initialState() {
-  return {
-    games: [{
-      id: 2222,
-      team1: {
-        points: 4,
-        name: 'Purple Parrots'
-      },
-      team2: {
-        points: 2,
-        name: 'Blue Bears'
-      }
-    }]
-  };
-}
-
-var gamesReducer = function gamesReducer(state, action) {
-  console.log('games reducer:', action);
-
-  if (state === undefined) {
-    return initialState();
-  }
-
-  switch (action.type) {
-    case CREATE_GAME:
-      {
-        var games = [].concat(_toConsumableArray(state.games), [action.game]);
-        return {
-          games: games
-        };
-      }
-
-    default:
-      {
-        return state;
-      }
-  }
-};
-
-var _default = gamesReducer;
-exports.default = _default;
-},{}],"Components/GameCreatePage.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/GamesReducer":"reducers/GamesReducer.js"}],"Components/GameCreatePage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33285,8 +33371,8 @@ function (_Component) {
   }
 
   _createClass(GameCreatePage, [{
-    key: "getTeambyId",
-    value: function getTeambyId(id) {
+    key: "getTeamById",
+    value: function getTeamById(id) {
       return this.props.teams.reduce(function (found, team) {
         if (found) {
           return found;
@@ -33307,9 +33393,8 @@ function (_Component) {
       var selects = form.getElementsByTagName('select');
       var teamId1 = selects[0].value;
       var teamId2 = selects[1].value;
-      var team1 = this.getTeambyId(teamId1);
-      var team2 = this.getTeambyId(teamId2);
-      console.log('create game', team1, team2);
+      var team1 = this.getTeamById(teamId1);
+      var team2 = this.getTeamById(teamId2);
       this.props.createGame(team1, team2);
     }
   }, {
@@ -33528,7 +33613,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54518" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50069" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

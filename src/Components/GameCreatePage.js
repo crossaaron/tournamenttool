@@ -8,7 +8,7 @@ class GameCreatePage extends Component {
         this.handleSubmit = this.handleSubmit.bind(this)
     }
 
-    getTeambyId(id) {
+    getTeamById(id) {
         return this.props.teams.reduce((found, team) => {
             if (found) {
                 return found
@@ -29,10 +29,9 @@ class GameCreatePage extends Component {
 
         const teamId1 = selects[0].value;
         const teamId2 = selects[1].value;
-        const team1 = this.getTeambyId(teamId1);
-        const team2 = this.getTeambyId(teamId2);
+        const team1 = this.getTeamById(teamId1);
+        const team2 = this.getTeamById(teamId2);
 
-        console.log('create game', team1, team2);
         this.props.createGame(team1,team2)
 
     }
