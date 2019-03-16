@@ -32740,11 +32740,12 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      console.log('detail props:', this.props);
       var team = this.getTeam();
       return _react.default.createElement("div", {
         id: "team-detail"
-      }, _react.default.createElement("h1", null, team.name), _react.default.createElement("ul", null, team.members.map(function (member, index) {
+      }, _react.default.createElement("h1", null, team.name), _react.default.createElement("p", null, _react.default.createElement(_reactRouterDom.Link, {
+        to: '/teams/edit/' + team.id
+      }, "Edit")), _react.default.createElement("ul", null, team.members.map(function (member, index) {
         return _react.default.createElement("li", {
           key: index
         }, member);
@@ -32762,7 +32763,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {}
+function mapDispatchToProps(dispatch) {
+  return {};
+}
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamDetailPage);
 
@@ -32774,14 +32777,24 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.createTeam = createTeam;
-exports.CREATE_TEAM = void 0;
+exports.editTeam = editTeam;
+exports.EDIT_TEAM = exports.CREATE_TEAM = void 0;
 var CREATE_TEAM = 'CREATE TEAM';
 exports.CREATE_TEAM = CREATE_TEAM;
+var EDIT_TEAM = 'EDIT_TEAM';
+exports.EDIT_TEAM = EDIT_TEAM;
 
 function createTeam(team) {
   team.id = Math.random();
   return {
     type: CREATE_TEAM,
+    team: team
+  };
+}
+
+function editTeam(team) {
+  return {
+    type: EDIT_TEAM,
     team: team
   };
 }
@@ -32838,7 +32851,6 @@ function (_Component) {
     key: "handleSubmit",
     value: function handleSubmit(event) {
       event.preventDefault();
-      console.log('create');
       var inputs = event.target.getElementsByTagName('input');
       var teamName = inputs[0].value;
       var member1 = inputs[1].value;
@@ -32886,13 +32898,173 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     createTeam: function createTeam(team) {
-      console.log('dispatch create:', team);
       dispatch((0, _TeamsActions.createTeam)(team));
     }
   };
 }
 
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamCreatePage);
+
+exports.default = _default;
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/TeamsActions":"reducers/TeamsActions.js"}],"Components/TeamEditPage.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireWildcard(require("react"));
+
+var _reactRedux = require("react-redux");
+
+var _TeamsActions = require("../reducers/TeamsActions");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var TeamEditPage =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(TeamEditPage, _Component);
+
+  function TeamEditPage(props) {
+    var _this;
+
+    _classCallCheck(this, TeamEditPage);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(TeamEditPage).call(this, props));
+    _this.state = {
+      team: _this.getTeam()
+    };
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(TeamEditPage, [{
+    key: "handleChange",
+    value: function handleChange() {
+      console.log('change');
+      var team = this.buildTeamFromFrom();
+      this.setState({
+        team: team
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(event) {
+      event.preventDefault();
+      var team = this.buildTeamFromFrom();
+      this.props.createTeam(team);
+    }
+  }, {
+    key: "buildTeamFromFrom",
+    value: function buildTeamFromFrom() {
+      var form = document.getElementById('edit-team-form');
+      var inputs = form.getElementsByTagName('input');
+      var name = inputs[0].value;
+      var member1 = inputs[1].value;
+      var member2 = inputs[2].value;
+      var member3 = inputs[3].value;
+      var team = {
+        name: name,
+        members: [member1, member2, member3]
+      };
+      return team;
+    }
+  }, {
+    key: "getTeam",
+    value: function getTeam() {
+      var id = this.props.match.params.id;
+      var team = this.props.teams.reduce(function (found, team) {
+        if (found) {
+          return found;
+        }
+
+        if (team.id == id) {
+          return team;
+        }
+
+        return false;
+      }, false);
+      return team;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var team = this.getTeam();
+
+      if (!team) {
+        return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Team Detail Error"), _react.default.createElement("p", null, "Team Not Found"));
+      }
+
+      return _react.default.createElement("div", null, _react.default.createElement("h1", null, "Edit Team"), _react.default.createElement("form", {
+        id: "edit-team-form",
+        onSubmit: this.handleSubmit
+      }, _react.default.createElement("p", null, "Team Name:", _react.default.createElement("input", {
+        onChange: this.handleChange,
+        type: "text",
+        name: "name",
+        value: this.state.team.name
+      })), _react.default.createElement("p", null, "Team Member:", _react.default.createElement("input", {
+        onChange: this.handleChange,
+        type: "text",
+        name: "member1",
+        value: this.state.team.members[0]
+      })), _react.default.createElement("p", null, "Team Member:", _react.default.createElement("input", {
+        onChange: this.handleChange,
+        type: "text",
+        name: "member2",
+        value: this.state.team.members[1]
+      })), _react.default.createElement("p", null, "Team Member:", _react.default.createElement("input", {
+        onChange: this.handleChange,
+        type: "text",
+        name: "member3",
+        value: this.state.team.members[2]
+      })), _react.default.createElement("p", null, _react.default.createElement("input", {
+        type: "submit",
+        value: "create"
+      }))));
+    }
+  }]);
+
+  return TeamEditPage;
+}(_react.Component);
+
+function mapStateToProps(state) {
+  var teams = state.topLevelTeamsStoreSpace.teams;
+  return {
+    teams: teams
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    createTeam: function createTeam(team) {
+      dispatch((0, _TeamsActions.editTeam)(team));
+    }
+  };
+}
+
+var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(TeamEditPage);
 
 exports.default = _default;
 },{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/TeamsActions":"reducers/TeamsActions.js"}],"Components/GameDetailPage.js":[function(require,module,exports) {
@@ -33015,8 +33187,6 @@ function initialState() {
 }
 
 var teamsReducer = function teamsReducer(state, action) {
-  console.log('action', action);
-
   if (state === undefined) {
     return initialState();
   }
@@ -33027,6 +33197,22 @@ var teamsReducer = function teamsReducer(state, action) {
         var teams = [].concat(_toConsumableArray(state.teams), [action.team]);
         return {
           teams: teams
+        };
+      }
+
+    case _TeamsActions.EDIT_TEAM:
+      {
+        var _teams = [].concat(_toConsumableArray(state.teams), [action.team]);
+
+        _teams = _teams.map(function (team) {
+          if (team.id === action.team.id) {
+            return action.team;
+          } else {
+            return team;
+          }
+        });
+        return {
+          teams: _teams
         };
       }
 
@@ -33089,6 +33275,8 @@ var _TeamDetailPage = _interopRequireDefault(require("./Components/TeamDetailPag
 
 var _TeamCreatePage = _interopRequireDefault(require("./Components/TeamCreatePage"));
 
+var _TeamEditPage = _interopRequireDefault(require("./Components/TeamEditPage"));
+
 var _GameDetailPage = _interopRequireDefault(require("./Components/GameDetailPage"));
 
 var _TeamsReducer = _interopRequireDefault(require("./reducers/TeamsReducer"));
@@ -33121,10 +33309,14 @@ _reactDom.default.render(_react.default.createElement(_reactRedux.Provider, {
   component: _TeamDetailPage.default
 }), _react.default.createElement(_reactRouterDom.Route, {
   exact: true,
+  path: "/teams/edit/:id",
+  component: _TeamEditPage.default
+}), _react.default.createElement(_reactRouterDom.Route, {
+  exact: true,
   path: "/games/id/:id",
   component: _GameDetailPage.default
 })))), document.getElementById('root'));
-},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./style.css":"style.css","./Components/Navbar.js":"Components/Navbar.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/TeamCreatePage":"Components/TeamCreatePage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-dom":"node_modules/react-dom/index.js","react-router-dom":"node_modules/react-router-dom/es/index.js","redux":"node_modules/redux/es/redux.js","react-redux":"node_modules/react-redux/es/index.js","./style.css":"style.css","./Components/Navbar.js":"Components/Navbar.js","./Components/Homepage":"Components/Homepage.js","./Components/TeamDetailPage":"Components/TeamDetailPage.js","./Components/TeamCreatePage":"Components/TeamCreatePage.js","./Components/TeamEditPage":"Components/TeamEditPage.js","./Components/GameDetailPage":"Components/GameDetailPage.js","./reducers/TeamsReducer":"reducers/TeamsReducer.js","./reducers/GamesReducer":"reducers/GamesReducer.js"}],"../../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -33151,7 +33343,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62039" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49366" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -10,10 +10,12 @@ import Navbar from './Components/Navbar.js'
 import Homepage from './Components/Homepage'
 import TeamDetailPage from './Components/TeamDetailPage'
 import TeamCreatePage from './Components/TeamCreatePage'
-import GameDetailPage from "./Components/GameDetailPage";
+import TeamEditPage from './Components/TeamEditPage'
+import GameDetailPage from './Components/GameDetailPage';
 
 import teamsReducer from './reducers/TeamsReducer'
 import gamesReducer from './reducers/GamesReducer'
+
 
 
 const reducer = combineReducers({
@@ -30,6 +32,7 @@ ReactDOM.render(
                 <Route exact path='/' component={Homepage} />
                 <Route exact path='/teams/create' component={TeamCreatePage} />
                 <Route exact path='/teams/id/:id' component={TeamDetailPage} />
+                <Route exact path='/teams/edit/:id' component={TeamEditPage} />
                 <Route exact path='/games/id/:id' component={GameDetailPage} />
 
             </div>

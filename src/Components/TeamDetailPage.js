@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { connect } from 'react-redux'
 
 
@@ -19,11 +19,13 @@ class TeamDetailPage extends Component {
     }
 
     render() {
-        console.log('detail props:', this.props);
-        let team = this.getTeam();
+        const team = this.getTeam();
         return (
             <div id='team-detail'>
                 <h1>{team.name}</h1>
+                <p>
+                    <Link to={'/teams/edit/' + team.id}>Edit</Link>
+                </p>
                 <ul>
                     {team.members.map((member, index) => {
                         return (
@@ -48,6 +50,8 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
+    return {
 
+    }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(TeamDetailPage)

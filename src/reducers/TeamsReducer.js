@@ -1,4 +1,4 @@
-import { CREATE_TEAM } from './TeamsActions';
+import { CREATE_TEAM, EDIT_TEAM } from './TeamsActions';
 
 function initialState() {
         return {
@@ -22,7 +22,7 @@ function initialState() {
 }
 
 const teamsReducer = (state, action) => {
-    console.log('action', action);
+
     if (state === undefined) {
         return initialState()
     }
@@ -30,6 +30,19 @@ const teamsReducer = (state, action) => {
     switch(action.type) {
         case CREATE_TEAM: {
             const teams = [...state.teams, action.team];
+            return {teams}
+        }
+
+        case EDIT_TEAM: {
+            let teams = [...state.teams, action.team];
+            teams = teams.map(team => {
+
+                if (team.id === action.team.id) {
+                    return action.team
+                } else {
+                    return team
+                }
+            });
             return {teams}
         }
         default: {

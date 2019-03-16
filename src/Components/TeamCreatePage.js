@@ -11,7 +11,6 @@ class TeamCreatePage extends Component {
     handleSubmit(event) {
         event.preventDefault();
 
-        console.log('create');
         const inputs = event.target.getElementsByTagName('input');
         const teamName = inputs[0].value;
         const member1 = inputs[1].value;
@@ -54,7 +53,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         createTeam: (team) => {
-            console.log('dispatch create:', team);
             dispatch(createTeam(team))
         }
 
