@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { createGame } from '../reducers/GamesReducer'
+import Standings from "./Standings";
 
 class GameCreatePage extends Component {
     constructor(props) {
@@ -69,6 +70,7 @@ class GameCreatePage extends Component {
                         <input type='submit' value='Create Game'></input>
                     </p>
                 </form>
+                <Standings />
             </div>
         )
     }

@@ -32674,16 +32674,16 @@ function (_Component) {
       var losses = 0;
       this.props.games.forEach(function (game) {
         if (game.team1.id == team.id || game.team2.id == team.id) {
-          if (game.team1.score === game.team2.score) {
+          if (game.team1.points === game.team2.points) {
             ties++;
           } else if (game.team1.id == team.id) {
-            if (game.team1.score > game.team2.score) {
+            if (game.team1.points > game.team2.points) {
               wins++;
             } else {
               losses++;
             }
           } else if (game.team2.id == team.id) {
-            if (game.team2.score > game.team1.score) {
+            if (game.team2.points > game.team1.points) {
               wins++;
             } else {
               losses++;
@@ -32699,9 +32699,31 @@ function (_Component) {
       };
     }
   }, {
+    key: "compareStandings",
+    value: function compareStandings(standing1, standing2) {
+      if (standing1.wins > standing2) {
+        return -1;
+      }
+
+      if (standing2.wins > standing1) {
+        return 1;
+      } else if (standing1.ties > standing2.ties) {
+        return -1;
+      } else if (standing2.ties > standing1.ties) {
+        return 1;
+      } else if (standing1.losses < standing2) {
+        return -1;
+      } else if (standing2.losses < standing1) {
+        return 1;
+      } else {
+        return 0;
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var standings = this.props.teams.map(this.tallyStanding);
+      standings.sort(this.compareStandings);
       console.log('standings:', standings);
       return _react.default.createElement("div", {
         id: "standing"
@@ -33452,6 +33474,10 @@ var _reactRedux = require("react-redux");
 
 var _GamesReducer = require("../reducers/GamesReducer");
 
+var _Standings = _interopRequireDefault(require("./Standings"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = Object.defineProperty && Object.getOwnPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : {}; if (desc.get || desc.set) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } } newObj.default = obj; return newObj; } }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
@@ -33537,7 +33563,7 @@ function (_Component) {
       }))), _react.default.createElement("p", null, _react.default.createElement("input", {
         type: "submit",
         value: "Create Game"
-      }))));
+      }))), _react.default.createElement(_Standings.default, null));
     }
   }]);
 
@@ -33562,7 +33588,7 @@ function mapDispatchToProps(dispatch) {
 var _default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(GameCreatePage);
 
 exports.default = _default;
-},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/GamesReducer":"reducers/GamesReducer.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
+},{"react":"node_modules/react/index.js","react-redux":"node_modules/react-redux/es/index.js","../reducers/GamesReducer":"reducers/GamesReducer.js","./Standings":"Components/Standings.js"}],"reducers/TeamsReducer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -33730,7 +33756,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51324" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53335" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

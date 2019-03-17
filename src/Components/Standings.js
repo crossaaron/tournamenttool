@@ -15,16 +15,16 @@ class Standings extends Component {
         let losses = 0;
         this.props.games.forEach(game => {
             if (game.team1.id == team.id || game.team2.id == team.id) {
-                if (game.team1.score === game.team2.score) {
+                if (game.team1.points === game.team2.points) {
                     ties++
                 } else if (game.team1.id == team.id) {
-                    if (game.team1.score > game.team2.score) {
+                    if (game.team1.points > game.team2.points) {
                         wins++
                     } else {
                         losses++
                     }
                 } else if (game.team2.id == team.id) {
-                    if (game.team2.score > game.team1.score) {
+                    if (game.team2.points > game.team1.points) {
                         wins++
                     } else {
                         losses++
@@ -36,8 +36,26 @@ class Standings extends Component {
         return {team, wins, ties, losses}
     }
 
+    compareStandings(standing1, standing2) {
+        if (standing1.wins > standing2) {
+            return -1
+        } if (standing2.wins > standing1) {
+                return 1
+        } else if (standing1.ties > standing2.ties) {
+            return -1
+        } else if (standing2.ties > standing1.ties) {
+                return 1
+        } else if (standing1.losses < standing2) {
+            return -1
+        } else if (standing2.losses < standing1) {
+                return 1
+        } else {
+            return 0
+        }
+    }
     render() {
         const standings = this.props.teams.map(this.tallyStanding);
+        standings.sort(this.compareStandings);
         console.log('standings:', standings);
         return (
             <div id='standing'>
